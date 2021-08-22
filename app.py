@@ -11,7 +11,7 @@
 # =======================================================================================================================
 
 
-from flask import Flask, Response, request
+from flask import Flask, Response, request, jsonify
 from modules.config_loader import *
 import modules.jobs as _jobs
 import modules.external_adaptor as external_adaptor
@@ -57,7 +57,7 @@ def temp():
     Called by Chainlink node while running a job
     """
 
-    return Response({"temp": 42})
+    return jsonify({"temp": 42})
 
 
 # =======================================================================================================================
