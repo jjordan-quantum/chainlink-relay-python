@@ -26,9 +26,9 @@ import modules.external_initiator as external_initiator
 app = Flask(__name__)
 
 
-# =======================================================================================================================
+# ======================================================================================================================
 #   APPLICATION ROUTES - ENDPOINTS REQUIRED BY CHAINLINK NODE
-# =======================================================================================================================
+# ======================================================================================================================
 
 
 @app.route("/", methods=["GET"])
@@ -125,6 +125,33 @@ def callback():
 
     req = request.get_json()
     callback_job_id = req["callbackJobId"]
+    external_initiator.call_chainlink_node(
+        callback_job_id,
+        CHAINLINK_ACCESS_KEY,
+        CHAINLINK_ACCESS_SECRET,
+        CHAINLINK_IP
+    )
+    return Response(status=200)
+
+
+# ======================================================================================================================
+#   APPLICATION ROUTES - ENDPOINTS TO CALL CHAINLINK NODE -> 'EXTERNAL INITIATOR'
+# ======================================================================================================================
+
+
+@app.route("/test", methods=["POST"])
+def test():
+    """
+    test
+
+    Endpoint for sending a request to the Chainlink Node to trigger a job run for the "jobId" specified in the
+    request body.
+    Note:   An external initiator must have already been created for the node in docker admin named "test", which
+            points at the port this app is listening on.
+    """
+
+    req = request.get_json()
+    callback_job_id = req["jobId"]
     external_initiator.call_chainlink_node(
         callback_job_id,
         CHAINLINK_ACCESS_KEY,
