@@ -171,7 +171,7 @@ def test():
     print(f"Response from request to Chainlink node:")
     print(f"Status: {response.status_code}")
     print(f"Headers: {response.headers}")
-    print(f"Original request: {response.request}")
+    #print(f"Original request: {response.request}")
     try:
         print(f"JSON: {response.json()}")
     except:
