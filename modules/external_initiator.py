@@ -10,7 +10,6 @@ def call_chainlink_node(job_id, chainlink_access_key, chainlink_access_secret, c
         "X-Chainlink-EA-Secret": chainlink_access_secret
     }
     if data:
-        response = requests.post(url, headers=headers, data=data)
+        return requests.post(url, headers=headers, data=data)
     else:
-        response = requests.post(url, headers=headers)
-    print(f"Status code from request to Chainlink node: {response.status_code}")
+        return requests.post(url, headers=headers)

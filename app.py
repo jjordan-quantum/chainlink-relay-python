@@ -75,10 +75,10 @@ def echo():
     """
 
     req = request.get_json()
-    print(f"req: {req}")
+    print("Request received to echo route:")
+    print(f"{req}")
     external_adaptor.echo(req['data']["message"])
     return jsonify({})
-    #return Response(status=200)
 
 
 @app.route("/start", methods=["POST"])
@@ -91,10 +91,12 @@ def start():
     """
 
     req = request.get_json()
-    contract_address = req["contractAddress"]
-    process_id = req["processId"]
+    print("Request received to start route:")
+    print(f"{req}")
+    contract_address = req['data']["contractAddress"]
+    process_id = req['data']["processId"]
     external_adaptor.start_process(contract_address, process_id)
-    return Response(status=200)
+    return jsonify({})
 
 
 @app.route("/stop", methods=["POST"])
@@ -107,10 +109,12 @@ def stop():
     """
 
     req = request.get_json()
-    contract_address = req["contractAddress"]
-    process_id = req["processId"]
+    print("Request received to stop route:")
+    print(f"{req}")
+    contract_address = req['data']["contractAddress"]
+    process_id = req['data']["processId"]
     external_adaptor.stop_process(contract_address, process_id)
-    return Response(status=200)
+    return jsonify({})
 
 
 @app.route("/callback", methods=["POST"])
@@ -126,14 +130,16 @@ def callback():
     """
 
     req = request.get_json()
-    callback_job_id = req["callbackJobId"]
+    print("Request received to callback route:")
+    print(f"{req}")
+    callback_job_id = req['data']["callbackJobId"]
     external_initiator.call_chainlink_node(
         callback_job_id,
         CHAINLINK_ACCESS_KEY,
         CHAINLINK_ACCESS_SECRET,
         CHAINLINK_IP
     )
-    return Response(status=200)
+    return jsonify({})
 
 
 # ======================================================================================================================
@@ -153,11 +159,15 @@ def test():
     """
 
     req = request.get_json()
+    print("Request received to test route:")
+    print(f"{req}")
     callback_job_id = req["jobId"]
-    external_initiator.call_chainlink_node(
+    response = external_initiator.call_chainlink_node(
         callback_job_id,
         CHAINLINK_ACCESS_KEY,
         CHAINLINK_ACCESS_SECRET,
         CHAINLINK_IP
     )
+    print(f"Response from request to Chainlink node:")
+    print(f"{response}")
     return Response(status=200)
