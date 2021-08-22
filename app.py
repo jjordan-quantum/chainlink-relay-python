@@ -77,7 +77,8 @@ def echo():
     req = request.get_json()
     print(f"req: {req}")
     external_adaptor.echo(req['data']["message"])
-    return Response(status=200)
+    return jsonify({})
+    #return Response(status=200)
 
 
 @app.route("/start", methods=["POST"])
