@@ -76,7 +76,7 @@ def echo():
 
     req = request.get_json()
     print(f"req: {req}")
-    external_adaptor.echo(req["message"])
+    external_adaptor.echo(req['data']["message"])
     return Response(status=200)
 
 
