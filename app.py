@@ -169,5 +169,6 @@ def test():
         CHAINLINK_IP
     )
     print(f"Response from request to Chainlink node:")
-    print(f"{response}")
+    print(f"Status: {response.status_code}")
+    print(f"Data: {response.data}")
     return Response(status=200)
